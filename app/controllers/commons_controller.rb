@@ -35,9 +35,9 @@ class CommonsController < ApplicationController
     set_model model.new(invoice_params)
 
     respond_to do |format|
-      if @invoice.save
+      if get_model.save
         format.html { redirect_to get_model, notice: 'Invoice was successfully created.' }
-        format.json { render :show, status: :created, location: @invoice }
+        format.json { render :show, status: :created, location: get_model }
       else
         flash[:alert] = "Invoice has not been created."
         format.html { render :new }
@@ -58,18 +58,17 @@ class CommonsController < ApplicationController
     end
   end
 
-
   # PATCH/PUT /invoices/1
   # PATCH/PUT /invoices/1.json
   def update
     respond_to do |format|
-      if @invoice.update(invoice_params)
-        format.html { redirect_to @invoice, notice: 'Invoice was successfully updated.' }
-        format.json { render :show, status: :ok, location: @invoice }
+      if get_model.update(invoice_params)
+        format.html { redirect_to get_model, notice: 'Invoice was successfully updated.' }
+        format.json { render :show, status: :ok, location: get_model }
       else
         flash[:alert] = 'Invoice has not been saved.'
         format.html { render :edit }
-        format.json { render json: @invoice.errors, status: :unprocessable_entity }
+        format.json { render json: get_model.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -77,7 +76,7 @@ class CommonsController < ApplicationController
   # DELETE /invoices/1
   # DELETE /invoices/1.json
   def destroy
-    @invoice.destroy
+    get_model.destroy
     respond_to do |format|
       format.html { redirect_to invoices_url, notice: 'Invoice was successfully destroyed.' }
       format.json { head :no_content }
@@ -87,7 +86,7 @@ class CommonsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice
-      @invoice = Invoice.find(params[:id])
+      set_model model.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:alert] = "The Invoice you were looking for could not be found."
       redirect_to recurring_invoices_path
@@ -96,38 +95,6 @@ class CommonsController < ApplicationController
     def set_extra_stuff
       @taxes = Tax.where active: true
       @series = Serie.where enabled: true
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def invoice_params
-      params.require(:invoice).permit(
-        :serie_id,
-        :due_date,
-
-        :customer_name,
-        :customer_email,
-
-        :invoicing_address,
-        :draft,
-
-        items_attributes: [
-          :id,
-          :description,
-          :quantity,
-          :unitary_cost,
-          :discount,
-          {:tax_ids => []},
-          :_destroy
-        ],
-
-        payments_attributes: [
-          :id,
-          :date,
-          :amount,
-          :notes,
-          :_destroy
-        ]
-      )
     end
 
     # This is to filter the parameters needed in #amounts
