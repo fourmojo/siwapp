@@ -1,8 +1,21 @@
-class InvoicesController < CommonsController
+class CommonsController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
   before_action :set_extra_stuff, only: [:new, :edit, :create, :update]
 
-  @@model = Invoice
+  @@model = nil
+
+  # GET /invoices
+  # GET /invoices.json
+  # GET /invoices.js
+  def index
+    @invoices = @@model.paginate(page: params[:page], per_page: 20).order(id: :desc)
+
+    respond_to do |format|
+      format.html { render layout: 'infinite-scrolling' }
+      format.json
+      format.js
+    end
+  end
 
   # GET /invoices/1
   # GET /invoices/1.json

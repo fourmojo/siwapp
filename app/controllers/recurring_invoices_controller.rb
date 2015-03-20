@@ -1,17 +1,8 @@
-class RecurringInvoicesController < ApplicationController
+class RecurringInvoicesController < CommonsController
   before_action :set_recurring_invoice, only: [:show, :edit, :update, :destroy]
   before_action :set_extra_stuff, only: [:new, :edit, :create, :update]
 
-  # GET /recurring_invoices
-  def index
-    @recurring_invoices = RecurringInvoice.paginate(page: params[:page], per_page: 20)
-      .order(number: :desc)
-
-    respond_to do |format|
-      format.html
-      format.js
-    end
-  end
+  Model = RecurringInvoice
 
   # GET /recurring_invoices/new
   def new
