@@ -2,13 +2,11 @@ class CommonsController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
   before_action :set_extra_stuff, only: [:new, :edit, :create, :update]
 
-  @@model = nil
-
   # GET /invoices
   # GET /invoices.json
   # GET /invoices.js
   def index
-    @invoices = @@model.paginate(page: params[:page], per_page: 20).order(id: :desc)
+    set_models model.paginate(page: params[:page], per_page: 20).order(id: :desc)
 
     respond_to do |format|
       format.html { render layout: 'infinite-scrolling' }
@@ -24,7 +22,7 @@ class CommonsController < ApplicationController
 
   # GET /invoices/new
   def new
-    @invoice = Invoice.new
+    set_model model.new
   end
 
   # GET /invoices/1/edit
@@ -34,16 +32,16 @@ class CommonsController < ApplicationController
   # POST /invoices
   # POST /invoices.json
   def create
-    @invoice = Invoice.new(invoice_params)
+    set_model model.new(invoice_params)
 
     respond_to do |format|
       if @invoice.save
-        format.html { redirect_to @invoice, notice: 'Invoice was successfully created.' }
+        format.html { redirect_to get_model, notice: 'Invoice was successfully created.' }
         format.json { render :show, status: :created, location: @invoice }
       else
         flash[:alert] = "Invoice has not been created."
         format.html { render :new }
-        format.json { render json: @invoice.errors, status: :unprocessable_entity }
+        format.json { render json: get_model.errors, status: :unprocessable_entity }
       end
     end
   end

@@ -2,31 +2,20 @@ class RecurringInvoicesController < CommonsController
   before_action :set_recurring_invoice, only: [:show, :edit, :update, :destroy]
   before_action :set_extra_stuff, only: [:new, :edit, :create, :update]
 
-  Model = RecurringInvoice
-
-  # GET /recurring_invoices/new
-  def new
-    @recurring_invoice = RecurringInvoice.new
+  def model
+    RecurringInvoice
   end
 
-  # POST /recurring_invoices
-  def create
-    @recurring_invoice = RecurringInvoice.new(recurring_invoice_params)
-
-    if @recurring_invoice.save
-      flash[:notice] = "Recurring Invoice was successfully created."
-      redirect_to @recurring_invoice
-    else
-      flash[:alert] = "Recurring Invoice has not been created."
-      render "new"
-    end
-
+  def set_models(stuff)
+    @recurring_invoices = stuff
   end
 
-  def show
+  def set_model(stuff)
+    @recurring_invoice = stuff
   end
 
-  def edit
+  def get_model
+    @recurring_invoice
   end
 
   def update

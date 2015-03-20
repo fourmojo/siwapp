@@ -2,37 +2,20 @@ class InvoicesController < CommonsController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
   before_action :set_extra_stuff, only: [:new, :edit, :create, :update]
 
-  @@model = Invoice
-
-  # GET /invoices/1
-  # GET /invoices/1.json
-  def show
+  def model
+    Invoice
   end
 
-  # GET /invoices/new
-  def new
-    @invoice = Invoice.new
+  def set_models(stuff)
+    @invoices = stuff
   end
 
-  # GET /invoices/1/edit
-  def edit
+  def set_model(stuff)
+    @invoice = stuff
   end
 
-  # POST /invoices
-  # POST /invoices.json
-  def create
-    @invoice = Invoice.new(invoice_params)
-
-    respond_to do |format|
-      if @invoice.save
-        format.html { redirect_to @invoice, notice: 'Invoice was successfully created.' }
-        format.json { render :show, status: :created, location: @invoice }
-      else
-        flash[:alert] = "Invoice has not been created."
-        format.html { render :new }
-        format.json { render json: @invoice.errors, status: :unprocessable_entity }
-      end
-    end
+  def get_model
+    @invoice
   end
 
   # GET /invoices/amounts
