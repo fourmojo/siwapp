@@ -17,6 +17,10 @@ class RecurringInvoicesController < CommonsController
     @recurring_invoice
   end
 
+  def path
+    recurring_invoices_path
+  end
+
   private
 
     def invoice_params

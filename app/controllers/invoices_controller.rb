@@ -17,6 +17,10 @@ class InvoicesController < CommonsController
     @invoice
   end
 
+  def path
+    invoices_path
+  end
+
   private
 
     # Never trust parameters from the scary internet, only allow the white list through.

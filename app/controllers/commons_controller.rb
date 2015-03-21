@@ -78,7 +78,7 @@ class CommonsController < ApplicationController
   def destroy
     common.destroy
     respond_to do |format|
-      format.html { redirect_to invoices_url, notice: 'Invoice was successfully destroyed.' }
+      format.html { redirect_to path, notice: 'Invoice was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -89,7 +89,7 @@ class CommonsController < ApplicationController
       self.common = @model.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:alert] = "The Invoice you were looking for could not be found."
-      redirect_to recurring_invoices_path
+      redirect_to path
     end
 
     def set_extra_stuff
