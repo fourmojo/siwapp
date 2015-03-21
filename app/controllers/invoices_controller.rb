@@ -1,18 +1,19 @@
 class InvoicesController < CommonsController
 
-  def model
-    Invoice
+  def initialize
+    @model = Invoice
+    super
   end
 
-  def set_models(stuff)
+  def commons=(stuff)
     @invoices = stuff
   end
 
-  def set_model(stuff)
+  def common=(stuff)
     @invoice = stuff
   end
 
-  def get_model
+  def common
     @invoice
   end
 

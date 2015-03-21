@@ -6,7 +6,7 @@ class CommonsController < ApplicationController
   # GET /invoices.json
   # GET /invoices.js
   def index
-    set_models model.paginate(page: params[:page], per_page: 20).order(id: :desc)
+    self.commons = @model.paginate(page: params[:page], per_page: 20).order(id: :desc)
 
     respond_to do |format|
       format.html { render layout: 'infinite-scrolling' }
@@ -22,7 +22,7 @@ class CommonsController < ApplicationController
 
   # GET /invoices/new
   def new
-    set_model model.new
+    self.common = @model.new
   end
 
   # GET /invoices/1/edit
@@ -32,16 +32,16 @@ class CommonsController < ApplicationController
   # POST /invoices
   # POST /invoices.json
   def create
-    set_model model.new(invoice_params)
+    self.common = @model.new(invoice_params)
 
     respond_to do |format|
-      if get_model.save
-        format.html { redirect_to get_model, notice: 'Invoice was successfully created.' }
-        format.json { render :show, status: :created, location: get_model }
+      if common.save
+        format.html { redirect_to common, notice: 'Invoice was successfully created.' }
+        format.json { render :show, status: :created, location: common }
       else
         flash[:alert] = "Invoice has not been created."
         format.html { render :new }
-        format.json { render json: get_model.errors, status: :unprocessable_entity }
+        format.json { render json: common.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,13 +62,13 @@ class CommonsController < ApplicationController
   # PATCH/PUT /invoices/1.json
   def update
     respond_to do |format|
-      if get_model.update(invoice_params)
-        format.html { redirect_to get_model, notice: 'Invoice was successfully updated.' }
-        format.json { render :show, status: :ok, location: get_model }
+      if common.update(invoice_params)
+        format.html { redirect_to common, notice: 'Invoice was successfully updated.' }
+        format.json { render :show, status: :ok, location: common }
       else
         flash[:alert] = 'Invoice has not been saved.'
         format.html { render :edit }
-        format.json { render json: get_model.errors, status: :unprocessable_entity }
+        format.json { render json: common.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,7 +76,7 @@ class CommonsController < ApplicationController
   # DELETE /invoices/1
   # DELETE /invoices/1.json
   def destroy
-    get_model.destroy
+    common.destroy
     respond_to do |format|
       format.html { redirect_to invoices_url, notice: 'Invoice was successfully destroyed.' }
       format.json { head :no_content }
@@ -86,7 +86,7 @@ class CommonsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice
-      set_model model.find(params[:id])
+      self.common = @model.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:alert] = "The Invoice you were looking for could not be found."
       redirect_to recurring_invoices_path

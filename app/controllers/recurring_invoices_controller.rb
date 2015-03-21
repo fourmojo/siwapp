@@ -1,18 +1,19 @@
 class RecurringInvoicesController < CommonsController
 
-  def model
-    RecurringInvoice
+  def initialize
+    @model = RecurringInvoice
+    super
   end
 
-  def set_models(stuff)
+  def commons=(stuff)
     @recurring_invoices = stuff
   end
 
-  def set_model(stuff)
+  def common=(stuff)
     @recurring_invoice = stuff
   end
 
-  def get_model
+  def common
     @recurring_invoice
   end
 
