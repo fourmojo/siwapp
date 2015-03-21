@@ -17,18 +17,6 @@ class InvoicesController < CommonsController
     @invoice
   end
 
-  # GET /invoices/amounts
-  #
-  # Calculates the amounts totals
-  def amounts
-    @invoice = Invoice.new(amounts_params)
-    @invoice.set_amounts
-
-    respond_to do |format|
-      format.js
-    end
-  end
-
   private
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -62,5 +50,4 @@ class InvoicesController < CommonsController
         ]
       )
     end
-
 end

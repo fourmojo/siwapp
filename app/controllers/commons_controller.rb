@@ -46,7 +46,7 @@ class CommonsController < ApplicationController
     end
   end
 
-  # GET /invoices/amounts
+  # GET /commons/amounts
   #
   # Calculates the amounts totals
   def amounts
