@@ -5,18 +5,6 @@ class RecurringInvoicesController < CommonsController
     super
   end
 
-  def commons=(stuff)
-    @recurring_invoices = stuff
-  end
-
-  def common=(stuff)
-    @recurring_invoice = stuff
-  end
-
-  def common
-    @recurring_invoice
-  end
-
   def path
     recurring_invoices_path
   end

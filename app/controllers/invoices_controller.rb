@@ -5,18 +5,6 @@ class InvoicesController < CommonsController
     super
   end
 
-  def commons=(stuff)
-    @invoices = stuff
-  end
-
-  def common=(stuff)
-    @invoice = stuff
-  end
-
-  def common
-    @invoice
-  end
-
   def path
     invoices_path
   end
